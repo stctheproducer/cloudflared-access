@@ -1,0 +1,11 @@
+#!/bin/bash
+
+set -e
+
+echo "=> Custom build hook running"
+docker buildx build \
+  --platform=linux/amd64,linux/arm64 \
+  --cache-from type=registry,ref=$DOCKER_REPO:cache \
+  --cache-to type=registry,ref=$DOCKER_REPO:cache,mode=max \
+  --platform linux/amd64,linux/arm64 \
+  -t $IMAGE_NAME .

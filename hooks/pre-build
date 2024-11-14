@@ -1,0 +1,8 @@
+#!/bin/bash
+
+set -e
+
+echo "=> Pre-build hook running"
+
+echo "Creating custom builder..."
+docker buildx create --name custom-builder --use
