@@ -3,6 +3,8 @@
 set -e
 
 echo "=> Creating custom builder..."
+export DOCKER_BUILDKIT=1
+export BUILDX_CONFIG="--platform=linux/amd64,linux/arm64"
 docker buildx create --name custom-builder --use
 
 echo "=> Custom build hook running"
@@ -11,7 +13,6 @@ docker buildx build \
   --cache-from type=registry,ref=$DOCKER_REPO:cache \
   --cache-to type=registry,ref=$DOCKER_REPO:cache,mode=max \
   --platform linux/amd64,linux/arm64 \
-  --push \
   -t $IMAGE_NAME .
 
 echo "=> Removing custom builder..."
